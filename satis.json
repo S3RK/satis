@@ -1,0 +1,25 @@
+{
+  "name": "paunin/satis",
+  "homepage": "http://satis.satis",
+  "require-dependencies": true,
+  "archive": {
+    "directory": "dist",
+    "format": "zip"
+  },
+  "output-dir": "web",
+  "require": {
+    "bobthecow/mustache-bundle": ">=1.2",
+    "guzzle/guzzle": "*"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packagist.org"
+    },
+    {
+     "type": "vcs",
+     "url": "ssh://git@github.com/nullziu/guzzle3.git",
+     "name:": "guzzle/guzzle"
+   }
+  ]
+}

@@ -1,0 +1,10 @@
+version: "2"
+services:
+  satis:
+    build:
+      context: .
+    hostname: satis
+    volumes:
+      - "~/.ssh/id_rsa:/root/.ssh/id_rsa"
+    ports:
+      - 8181:80

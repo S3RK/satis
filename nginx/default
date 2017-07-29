@@ -1,0 +1,69 @@
+worker_processes  1;
+
+pid        /tmp/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    access_log /dev/stdout;
+    error_log  /dev/stdout error;
+
+    sendfile        on;
+
+    keepalive_timeout  65;
+
+    server {
+        listen  80;
+        root /satis/web;
+        server_name localhost;
+        access_log /dev/stdout;
+        error_log  /dev/stdout error;
+        charset utf-8;
+
+        location /\. {
+            deny all;
+            return 404;
+        }
+
+        location /build {
+          default_type 'text/plain';
+
+          content_by_lua_block {
+            local decodeURI
+            do
+              local char, gsub, tonumber = string.char, string.gsub, tonumber
+              local function _(hex) return char(tonumber(hex, 16)) end
+
+              function decodeURI(s)
+                  s = gsub(s, '%%(%x%x)', _)
+                  return s
+              end
+            end
+
+            local package = ngx.var.arg_package or ''
+            local force = ngx.var.arg_force or ''
+            local handle = io.popen("FORCE_SCHEDULE="  .. force  .." PACKAGE='"  .. decodeURI(package) .. "'" .. " /satis/bin/nginx_trigger.sh " , 'r')
+            local result = handle:read("*a")
+            handle:close()
+
+
+            if string.match(result, "<ERROR>") then
+              ngx.status = 400
+            else
+              ngx.status = 200
+            end
+            
+            ngx.say(result)
+          }
+
+        }
+
+    }
+
+
+}
