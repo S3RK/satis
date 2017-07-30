@@ -3,6 +3,7 @@ services:
   satis:
     build:
       context: .
+      dockerfile: Satis-latest.Dockerfile
     hostname: satis
     volumes:
       - "~/.ssh/id_rsa:/root/.ssh/id_rsa"
