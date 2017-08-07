@@ -8,6 +8,8 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_NO_INTERACTION 1
 ENV COMPOSER_HOME /satis/web/.composer
 ENV SATIS_CONFIG_FILE /satis/satis.json
+ENV LOOPER_PERIOD 30
+ENV DELAY_BEFORE_BUILD 5
 
 ADD satis.json /satis/satis.json
 ADD bin/ /satis/bin/

@@ -11,5 +11,5 @@ do
     echo ">>> Nginx is down!"
     exit 100
   fi
-  sleep 10
+  sleep $LOOPER_PERIOD
 done

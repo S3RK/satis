@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
-LOCK_FILE=/tmp/lock
 
+echo ">>> Sleep before build $DELAY_BEFORE_BUILD second(s)"
+sleep $DELAY_BEFORE_BUILD
 touch /tmp/build.lock
 
 mv -f /tmp/build.lock /tmp/build.lock.run
